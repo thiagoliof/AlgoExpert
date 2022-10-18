@@ -2,12 +2,14 @@
 # the insert, contains, and remove methods.
 # Feel free to add new properties and methods
 # to the class.
+from turtle import right
+
+
 class BST:
-    def __init__(self, value, isRoot=False):
+    def __init__(self, value):
         self.value = value
         self.left = None
         self.right = None
-        self.root = isRoot
 
     def insert(self, value):
         if value < self.value:
@@ -40,32 +42,55 @@ class BST:
     
 
     def remove(self, value, parent=None):
-        obj = None
+
         if value < self.value:
             if not self.left is None:
                 self.left.remove(value, self)
         elif value > self.value:
             if not self.right is None:
                 self.right.remove(value, self)
-        elif value == self.value:
-            obj = self
-
-        return obj
-
-
-
-
+        
+        else:
+            if not self.left is None and not self.right is None:
+                self.value = self.right.getMinValue()
+            # root tree
+            elif parent is None:
+                if self.left is not None:
+                    self.value = self.left.value
+                    self.right = self.left.right
+                    self.left = self.left.left
+                elif self.right is not None:
+                    self.value = self.right.value
+                    self.left = self.right.left
+                    self.right = self.right.right
+                else:
+                    pass
+            elif parent.left == self:
+                parent.left = self.left if self.left is not None else self.right
+            elif parent.right == self:
+                parent.right = self.left if self.left is not None else self.right
+        
     def getMinValue(self):
         if self.left is None:
             return self.value
         else:
             return self.left.getMinValue()
+
+    def getMaxValue(self):
+        if self.right is None:
+            return self.value
+        else:
+            return self.right.getMaxValue()
+
+
+
+    
             
 
 
 
 if __name__ == "__main__":
-    bst = BST(20, True)
+    bst = BST(20)
     bst.insert(10)
     bst.insert(9)
     bst.insert(8)
@@ -78,9 +103,11 @@ if __name__ == "__main__":
     bst.insert(35)
     bst.insert(34)
     
-    var = bst.remove(34)
+    var = bst.remove(20)
     print(var)
 
+    max = bst.getMaxValue()
+    print(max)
 
     
 
