@@ -1,15 +1,14 @@
 def maxCard(cards):
-    
-    visited = []
     lst = []
-
     for i in range(0, len(cards)):
+        
         current_cards = cards[i]
         current_cards.sort(reverse=True)
 
         low = 0
         high = len(current_cards)
-
+        visited = []
+        
         while low < high:
             if current_cards[low] in current_cards[low+1:high]:
                 visited.append(current_cards[low])
@@ -22,7 +21,7 @@ def maxCard(cards):
     return -1 if len(lst) == 0 else max(lst)
 
 
-cards = [[11, 2, 3], [3, 3, 3, 4, 4, 6, 7]]
+cards = [[11, 11], [1, 1, 54]]
 
 
 mc = maxCard(cards)
