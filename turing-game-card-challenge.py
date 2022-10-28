@@ -1,5 +1,5 @@
 def maxCard(cards):
-    lst = []
+    maxCard = float("-inf")
     for i in range(0, len(cards)):
         
         current_cards = cards[i]
@@ -16,9 +16,10 @@ def maxCard(cards):
     
         for card in current_cards:
             if card not in visited:
-                lst.append(card)
+                if maxCard < card:
+                    maxCard = card
  
-    return -1 if len(lst) == 0 else max(lst)
+    return -1 if maxCard == float("-inf") else maxCard
 
 
 cards = [[11, 11], [1, 1, 54]]
